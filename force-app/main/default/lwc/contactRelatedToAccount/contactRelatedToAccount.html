@@ -1,0 +1,109 @@
+<template>
+
+  <template if:true={isModalOpen}>
+    <div
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          position: relative;
+          z-index: 1001;
+          width: 500px;
+        "
+      >
+        <div>
+          <button
+            style="
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              cursor: pointer;
+              /* background: none; */
+              border: none;
+              border-radius: 50%;
+              font-size: 15px;
+              /* background-color: red; */
+              color: black;
+              padding: 2px 10px 3px 10px;
+              font-weight: bold;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            "
+            onclick={closeModal}
+          >
+            X
+          </button>
+        </div>
+        <div class="slds-p-around_medium">
+          <lightning-input
+            label="First Name"
+            value={firstName}
+            onchange={handleFirstNameChange}
+          ></lightning-input>
+          <lightning-input
+            label="Last Name"
+            value={lastName}
+            onchange={handleLastNameChange}
+          ></lightning-input>
+          <lightning-input
+            label="Email"
+            type="email"
+            value={email}
+            onchange={handleEmailChange}
+          ></lightning-input>
+          <lightning-input
+            label="Phone"
+            value={phone}
+            onchange={handlePhoneChange}
+          ></lightning-input>
+          <lightning-input
+            label="Account Name"
+            field-name="AccountId"
+            value={accountName}
+            read-only
+            style="font-weight: bold"
+          ></lightning-input>
+
+          <lightning-button
+            variant="brand"
+            label="Create Contact"
+            onclick={createContact}
+          ></lightning-button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <div if:true={recordId} class="slds-modal__container">
+    <p style="text-align: center; font-weight: bold">
+      {accountName} Related Contacts
+    </p>
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 12px">
+      <button class="button" onclick={showModal}>
+        Create a new contact record <span>+</span>
+      </button>
+    </div>
+    <lightning-card style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)">
+      <lightning-datatable
+        key-field="id"
+        data={result}
+        columns={columns}
+        hide-checkbox-column
+        show-row-number-column="true"
+      ></lightning-datatable>
+    </lightning-card>
+  </div>
+</template>
